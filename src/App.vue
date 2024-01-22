@@ -2,11 +2,15 @@
 import appHeader from './components/appHeader.vue';
 import appMain from './components/appMain.vue';
 import appFooter from './components/appFooter.vue';
+import axios from 'axios';
 
 
 export default {
     data() {
-        return 
+        return {
+            cards:[]
+
+        }
     },
     methods:{
 
@@ -15,17 +19,32 @@ export default {
         appHeader,
         appMain,
         appFooter,
+        axios
 
+    },
+    mounted() {
+        axios
+            .get('https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0')
+            .then((response) => { 
+                console.log(response)             
+                console.log(response.data.data);
+                this.cards = response.data.data
+            });
+        
     }
   
 }
 </script>
 
 <template>
+
   
   <appHeader />
 
-  <appMain />
+  <appMain 
+  :cards = cards
+  />
+  
 
   <appFooter />
   
