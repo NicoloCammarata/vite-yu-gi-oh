@@ -1,6 +1,8 @@
 
+
 @use "partials/variabiles.scss" as *;
 @use "partials/mixins.scss" as *;
 
-
+// Import all of Bootstrap's CSS
+@import "bootstrap/scss/bootstrap";
 
