@@ -1,14 +1,33 @@
 <script >
-
+import axios from 'axios';
 
 export default {
     data() {
         return {
-            
+            cards:[],
+            searchArchetype: ''
             
         }
     },
     methods:{
+        findArchetype(){
+            let queryString = ''
+
+            if(this.searchArchetype.length > 0){
+                queryString = '?archetype=' + this.searchArchetype;
+            }
+            axios
+                .get('https://db.ygoprodeck.com/api/v7/cardinfo.php' + queryString)
+                .then((response) => { 
+                    console.log(response)             
+                    console.log(response.data.data);
+                    this.cards = response.data.data
+                
+                });
+            
+                
+            
+        }
 
     },
     props:{
@@ -20,6 +39,19 @@ export default {
 
 <template>
     <main class="container">
+        <form @submit.prevent="findArchetype()" class="row g-3">
+            <select v-model="searchArchetype" id="inputState" class="form-select w-25 d-inline p-2">
+            <option selected>Choose...</option>
+            <option value="Alien">Alien</option>
+            <option value="Infernoble Arms">Infernoble Arms</option>
+            <option value="Nobel Knight">Nobel Knight</option>
+            </select>
+            <button>
+            search
+            </button>
+
+        </form>
+        
         <ul class="row">
             <div>
                 found 39 cards
@@ -60,7 +92,7 @@ main{
             list-style: none;
             background-color: orange;
             padding: 0 15px;
-            margin-top: 10px;
+            margin-bottom: 10px;
         }
         
     }
