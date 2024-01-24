@@ -1,11 +1,14 @@
 <script >
 import axios from 'axios';
 
+import { store } from '../store'
+
 export default {
     data() {
         return {
-            cards:[],
-            searchArchetype: ''
+            store,
+            searchArchetype: '',
+            
             
         }
     },
@@ -21,18 +24,18 @@ export default {
                 .then((response) => { 
                     console.log(response)             
                     console.log(response.data.data);
-                    this.cards = response.data.data
+                    this.store.cards = response.data.data
                 
                 });
             
                 
             
         }
+        
 
     },
-    props:{
-        cards: Object
-    }
+    
+
     
 }
 </script>
@@ -42,9 +45,9 @@ export default {
         <form @submit.prevent="findArchetype()" class="row g-3">
             <select v-model="searchArchetype" id="inputState" class="form-select w-25 d-inline p-2">
             <option selected>Choose...</option>
-            <option value="Alien">Alien</option>
-            <option value="Infernoble Arms">Infernoble Arms</option>
-            <option value="Nobel Knight">Nobel Knight</option>
+            <option value="-Eyes Dragon">-Eyes Dragon</option>
+            <option value="@Ignister">@Ignister</option>
+            <option value="Blue-Eyes">Blue-Eyes</option>
             </select>
             <button>
             search
@@ -52,12 +55,13 @@ export default {
 
         </form>
         
+        
         <ul class="row">
             <div>
                 found 39 cards
 
             </div>
-            <li v-for="(card, i) in cards" class="col-3 p-0 ">
+            <li v-for="(card, i) in store.cards" :key="i" class="col-3 p-0 ">
                 <div class="w-100">
                     <img :src="card.card_images[0].image_url" class="w-100" alt="">
                 

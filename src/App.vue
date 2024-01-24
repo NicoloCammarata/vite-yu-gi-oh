@@ -3,12 +3,12 @@ import appHeader from './components/appHeader.vue';
 import appMain from './components/appMain.vue';
 import appFooter from './components/appFooter.vue';
 import axios from 'axios';
-
+import { store } from './store'
 
 export default {
     data() {
         return {
-            cards:[]
+            store,
 
         }
     },
@@ -24,12 +24,14 @@ export default {
     },
     mounted() {
         axios
-            .get('https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0')
-            .then((response) => { 
-                console.log(response)             
-                console.log(response.data.data);
-                this.cards = response.data.data
-            });
+                .get(this.store.url)
+                .then((response) => { 
+                    console.log(response)             
+                    console.log(response.data.data);
+                    this.store.cards = response.data.data
+                
+                });
+            
         
     }
   
@@ -41,9 +43,7 @@ export default {
   
   <appHeader />
 
-  <appMain 
-  :cards = cards
-  />
+  <appMain />
   
 
   <appFooter />
